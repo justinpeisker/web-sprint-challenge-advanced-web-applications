@@ -1,12 +1,70 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 
+const initialValues = {
+    username: '',
+    password: ''
+}
+const initialError = {
+    errorMessage: '',
+    loading: false
+}
+
 const Login = () => {
+
+    const [creds, setCreds] = useState(initialValues);
+    const [error, setError] = useState(initialError);
+
+    const {push} = useHistory();
+
+    const handleChange = (e) => {
+        setCreds({
+            ...creds,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:5000/api/login', creds)
+        .then(res => {
+            localStorage.setItem('token', res.data.token);
+            push('/view');
+        })
+        .catch(err => {
+            setError(err.response.data)
+        })
+    }
+
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <form onSubmit= {handleSubmit} id= 'submit'>
+                <label> Username
+                    <input 
+                        id= 'username'
+                        name= 'username'
+                        placeholder= 'username'
+                        value= {creds.username}
+                        onChange= {handleChange}
+                    />
+                </label>
+                <label>Password
+                    <input
+                        id= 'password'
+                        name= 'password'
+                        placeholder= 'password'
+                        value= {creds.password}
+                        onChange= {handleChange}
+                    />
+                </label>
+                <button> login </button>
+            </form>
+            <p id= 'error'>{error.errorMessage}</p>
         </ModalContainer>
     </ComponentContainer>);
 }
