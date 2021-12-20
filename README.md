@@ -118,8 +118,19 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Explain what a token is used for.
 
+    A token is a unique id for a session.  It allows to user to access private route protected pages and content.  When a sussessful login occurs, a token is created.  When a logout occurs, the token is deleted.  
+
 2. What steps can you take in your web apps to keep your data secure?
+
+    Creating token systems with private routes.
 
 3. Describe how web servers work.
 
+    Web servers are computers dedicated to storing data, and the code required to run them.  When a client makes a request to the server, the server sends the requested code back to the client.
+
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+
+    Create- put - this creates new data in the API/Server
+    Read - get - this request data to read from the API/Server
+    Update- put - this updates the specified data on the API/Server
+    Delete- delete- this deletes the specified data on the API/Server
